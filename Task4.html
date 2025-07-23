@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Listing</title>
+  <link rel="stylesheet" href="Task4.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🛍️ Product Listing Page</h1>
+
+    <div class="controls">
+      <select id="categoryFilter" onchange="filterProducts()">
+        <option value="all">All Categories</option>
+        <option value="electronics">Electronics</option>
+        <option value="fashion">Fashion</option>
+        <option value="grocery">Grocery</option>
+      </select>
+
+      <select id="sortOrder" onchange="sortProducts()">
+        <option value="default">Sort by</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+      </select>
+    </div>
+
+    <div id="productContainer" class="grid"></div>
+  </div>
+
+  <script src="Task4.js"></script>
+</body>
+</html>
