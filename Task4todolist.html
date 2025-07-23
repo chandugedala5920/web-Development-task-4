@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List with Local Storage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+    }
+    #taskInput {
+      width: 80%;
+      padding: 10px;
+    }
+    #addBtn {
+      padding: 10px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      padding: 10px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .deleteBtn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <h2>📝 To-Do List</h2>
+  <input type="text" id="taskInput" placeholder="Add new task...">
+  <button id="addBtn">Add</button>
+  <ul id="taskList"></ul>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+    const taskList = document.getElementById('taskList');
+
+    // Load tasks from localStorage on load
+    window.onload = () => {
+      const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      savedTasks.forEach(task => addTask(task));
+    };
+
+    addBtn.addEventListener('click', () => {
+      const taskText = taskInput.value.trim();
+      if (taskText) {
+        addTask(taskText);
+        saveTask(taskText);
+        taskInput.value = '';
+      }
+    });
+
+    function addTask(taskText) {
+      const li = document.createElement('li');
+      li.textContent = taskText;
+      const delBtn = document.createElement('button');
+      delBtn.textContent = 'Delete';
+      delBtn.className = 'deleteBtn';
+      delBtn.onclick = () => {
+        taskList.removeChild(li);
+        deleteTask(taskText);
+      };
+      li.appendChild(delBtn);
+      taskList.appendChild(li);
+    }
+
+    function saveTask(task) {
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks.push(task);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function deleteTask(taskToDelete) {
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks = tasks.filter(task => task !== taskToDelete);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+  </script>
+</body>
+</html>
